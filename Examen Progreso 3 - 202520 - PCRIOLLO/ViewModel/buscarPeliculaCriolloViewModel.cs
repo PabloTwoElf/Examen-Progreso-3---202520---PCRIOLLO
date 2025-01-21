@@ -1,9 +1,11 @@
 ﻿using Examen_Progreso_3___202520___PCRIOLLO.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Examen_Progreso_3___202520___PCRIOLLO.ViewModel
 {
@@ -33,8 +35,34 @@ namespace Examen_Progreso_3___202520___PCRIOLLO.ViewModel
             }
         }
 
-        public Observable
+        public ObservableCollection<string> GuardarPelicula { get; set; }
+
+        public ICommand BuscarPeliculaCommand { get; }
+        public ICommand LimpiarCommand { get; }
 
 
+
+        public buscarPeliculaCriolloViewModel(PeliculaBuscarServices peliculaBuscarServices) {
+
+
+            _peliculaBuscarServices = peliculaBuscarServices;
+            GuardarPelicula = new ObservableCollection<string>();
+            BuscarPeliculaCommand = new Command(async () => await BuscarPeliculaAsync());
+            LimpiarCommand = new Command(() => Limpiar());
+
+        }
+
+        private async Task BuscarPeliculaAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private void Limpiar()
+        {
+            throw new NotImplementedException();
+        }
+
+       
     }
 }
