@@ -20,12 +20,12 @@ namespace Examen_Progreso_3___202520___PCRIOLLO.Services
             _database.CreateTable<peliculaPC>();
         }
 
-        public List<peliculaPC> GetMovies()
+        public List<peliculaPC> GetPelicula()
         {
             return _database.Table<peliculaPC >().ToList();
         }
 
-        public void AddMovie(peliculaPC pelicula)
+        public void AddPelicula(peliculaPC pelicula)
         {
             _database.Insert(pelicula);
         }

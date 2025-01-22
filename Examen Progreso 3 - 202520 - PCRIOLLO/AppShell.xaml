@@ -3,21 +3,28 @@
     x:Class="Examen_Progreso_3___202520___PCRIOLLO.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:local="clr-namespace:Examen_Progreso_3___202520___PCRIOLLO"
-    xmlns:views="clr-namespace:Examen_Progreso_3___202520___PCRIOLLO.View"
+    xmlns:Views="clr-namespace:Examen_Progreso_3___202520___PCRIOLLO.Views"
+    xmlns:ViewModel="clr-namespace:Examen_Progreso_3___202520___PCRIOLLO.ViewModel"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Shell.FlyoutBehavior="Disabled"
     Title="ExamenProgreso3PCRIOLLO">
 
-    <TabBar>
+    <!-- Configuración del BindingContext -->
+    <Shell.BindingContext>
+        <ViewModel:EnlistarViewModelPC />
+    </Shell.BindingContext>
 
-        <ShellContent
-            Title="Buscar Película"
-            Icon="icon_buscar.png"
-            ContentTemplate="{DataTemplate views:buscarPeliculaPC}"
-            Route="buscarPelicula" />
-        
-      
-     
-    </TabBar>
+    <!-- ShellItems -->
+    <ShellItem Title="Agregar">
+        <ShellSection>
+            <ShellContent ContentTemplate="{DataTemplate Views:BuscarPaginaWebPC}" />
+        </ShellSection>
+    </ShellItem>
+
+    <ShellItem Title="Lista">
+        <ShellSection>
+            <ShellContent ContentTemplate="{DataTemplate Views:MostrarPeliculasViewPC}" />
+        </ShellSection>
+    </ShellItem>
 
 </Shell>

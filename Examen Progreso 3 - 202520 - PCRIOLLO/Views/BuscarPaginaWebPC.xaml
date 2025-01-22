@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModel="clr-namespace:Examen_Progreso_3___202520___PCRIOLLO.ViewModel"
+             x:Class="Examen_Progreso_3___202520___PCRIOLLO.Views.BuscarPaginaWebPC"
+             Title="Buscar Película">
+
+
+    <ContentPage.BindingContext>
+        <ViewModel:EnlistarViewModelPC />   
+    </ContentPage.BindingContext>
+
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+
+        <Entry x:Name="EntryTituloPelicula" 
+               Text="{Binding NombrePelicula}" 
+               Placeholder="Ingresa el nombre de la película" 
+               Margin="0,0,0,10" />
+
+        <!-- Botón para buscar la película -->
+        <Button x:Name="BtnSearch" 
+                Text="Buscar" 
+                Command="{Binding BuscarPeliculaCommand}" 
+                BackgroundColor="#0078D7" 
+                TextColor="White" 
+                CornerRadius="5" 
+                Padding="10" />
+
+        <!-- Botón para limpiar el campo de entrada -->
+        <Button x:Name="BtnClear" 
+                Text="Limpiar" 
+                Command="{Binding LimpiarCommand}" 
+                BackgroundColor="#D32F2F" 
+                TextColor="White" 
+                CornerRadius="5" 
+                Padding="10" />
+
+        <!-- Etiqueta para mostrar mensajes -->
+        <Label x:Name="LabelMensaje" 
+               Text="{Binding Respuesta}"
+               HorizontalTextAlignment="Start"
+               HorizontalOptions="Fill" 
+               TextColor="Gray"
+               FontSize="Medium"
+               Margin="0,10,0,0" />
+
+    </VerticalStackLayout>
+
+</ContentPage>

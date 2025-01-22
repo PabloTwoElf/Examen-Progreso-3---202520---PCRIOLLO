@@ -4,9 +4,8 @@ using Examen_Progreso_3___202520___PCRIOLLO.Models;
 using Examen_Progreso_3___202520___PCRIOLLO.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Examen_Progreso_3___202520___PCRIOLLO.ViewModel
@@ -21,13 +20,20 @@ namespace Examen_Progreso_3___202520___PCRIOLLO.ViewModel
         [ObservableProperty]
         private string respuesta;
 
+        public PeliculaViewModelPc(PeliculaServicesPC peliculaServicesPC)
+        {
+            _peliculaServicesPC = peliculaServicesPC;
+        }
+
         [RelayCommand]
         public async Task BuscarPeliculaAsync()
         {
             try
             {
                 using var httpClient = new HttpClient();
-                string url = $"https://www.freetestapi.com/api/v1/movies?search={NombrePelicula}";
+                string encodedNombrePelicula = Uri.EscapeDataString(NombrePelicula);
+                string url = $"https://www.freetestapi.com/api/v1/movies?search={encodedNombrePelicula}";
+
                 var response = await httpClient.GetFromJsonAsync<List<VistaApi>>(url);
 
                 if (response != null && response.Count > 0)
@@ -37,10 +43,10 @@ namespace Examen_Progreso_3___202520___PCRIOLLO.ViewModel
                     var actores = pelicula.Actores != null && pelicula.Actores.Count > 0 ? pelicula.Actores[0] : "Estado .... Desconocido";
 
                     Respuesta = $"Titulo: {pelicula.Titulo} \n" +
-                        $"Genero: {genero} \n" +
-                        $"Actores: {actores} \n" +
-                        $"Reconocimientos: {pelicula.Reconocimientos} \n" +
-                        $"Sitio Web: {pelicula.Website} \n Pablo Criollo Escobar";
+                                $"Genero: {genero} \n" +
+                                $"Actores: {actores} \n" +
+                                $"Reconocimientos: {pelicula.Reconocimientos} \n" +
+                                $"Sitio Web: {pelicula.Website} \n Pablo Criollo Escobar";
 
                     var newPelicula = new peliculaPC
                     {
@@ -51,25 +57,26 @@ namespace Examen_Progreso_3___202520___PCRIOLLO.ViewModel
                         SitioWeb = pelicula.Website
                     };
 
-                    _peliculaServicesPC.AddMovie(newPelicula);
+                    _peliculaServicesPC.AddPelicula(newPelicula);
                 }
                 else
                 {
-                    Respuesta = "No se pudo buscar ese tipo de pelicula xd...";
+                    Respuesta = "No se encontraron resultados para esa película.";
                 }
             }
             catch (Exception ex)
             {
-                Respuesta = "Error al buscar la pelicula xd...";
+                Respuesta = $"Error al buscar la película: {ex.Message}";
             }
         }
 
         [RelayCommand]
         public void Limpiar()
         {
-            nombrePelicula = string.Empty;
+            NombrePelicula = string.Empty;
             Respuesta = string.Empty;
         }
+
         public class VistaApi
         {
             public string Titulo { get; set; }
@@ -79,9 +86,4 @@ namespace Examen_Progreso_3___202520___PCRIOLLO.ViewModel
             public string Website { get; set; }
         }
     }
-
-
-
-
-    }
-
+}
